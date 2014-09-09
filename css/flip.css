@@ -1,0 +1,37 @@
+.js, .js *, .js h1:before, .js hr:before {
+  transition-property: background, background-color, color;
+  transition-duration: 2s, 2s, 20s;
+  transition-timing-function: ease, ease, cubic-bezier(0.0, 0.6, 0.7, 0.7);
+}
+
+.flipped, mark {
+  color: #AAA;
+  background: black;
+}
+
+.flipped mark {
+  color: #494949;
+  background: white;
+}
+
+.flipped h1, .flipped h3, .flipped h4, .flipped h5, .flipped h6, .flipped th, .flipped thead, .flipped tfoot, .flipped hr:before, .flipped article h1:before {
+  color: white;
+}
+
+.flipped h2 {
+  color: #AAA;
+}
+
+.flipped a, .flipped a:active, .flipped a:visited, .flipped button {
+  color: white;
+  border-color: white;
+}
+
+.flipped body > header, .flipped body > footer, #index {
+  border-color: #AAA;
+}
+
+button.flip {
+  float: right;
+}
+

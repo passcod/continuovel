@@ -1,0 +1,9 @@
+nav
+  - var not_first = req.params.n > 0
+  - var not_last = req.params.n < $.chapter
+  if not_first
+    - var n = +req.params.n - 1, ch = getChapter(n)
+    a(rel='prev', href='/chapter/' + n, title='Chapter ' + n + ': ' + ch.title) Previous
+  if not_last
+    - var n = +req.params.n + 1, ch = getChapter(n)
+    a(rel='next', href='/chapter/' + n, title='Chapter ' + n + ': ' + ch.title) Next

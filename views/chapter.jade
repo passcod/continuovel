@@ -1,0 +1,14 @@
+extends layout.jade
+
+- var live = req.params.n == $.chapter
+
+block script
+  script(src='/js/' + (live ? 'live,' : '') + 'flip')
+
+block yield
+  - var chapter = getChapter(req.params.n)
+  include prevnext.jade
+  article(data-id=req.params.n, data-live=live)
+    h1= 'Chapter ' + req.params.n + ': ' + chapter.title
+    != markdown(chapter.contents)
+  include prevnext.jade

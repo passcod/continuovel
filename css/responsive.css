@@ -1,0 +1,13 @@
+@media (max-width: 500px) {
+  body > footer {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 420px) {
+  body > footer {
+    font-size: 0.6em;
+  }
+}
+
+

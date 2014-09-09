@@ -1,0 +1,35 @@
+doctype html
+- var update = $.interval.humanize().replace(/^a\s/, '')
+html(lang='en')
+  head
+    script.
+      var _gaq = _gaq || [];
+      _gaq.push(['_setDomainName', location.hostname]);
+    meta(charset='UTF-8')
+    meta(name='viewport', content='initial-scale=1')
+    meta(name='description', content='A serial novel updated every ' + update + ' by Félix "passcod" Saparelli. Fantasy.')
+    block title
+      title= 'White Aldus ❧ Updates every ' + update
+    block style
+      link(rel='stylesheet', href='/css/base,responsive,flip')
+    link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Alegreya+SC|Alegreya:400,400italic,700,700italic')
+    link(rel='alternate', href='/feed', type='application/atom+xml', title='White Aldus Update Feed')
+  body
+    header
+      h1
+        a(href='/') White Aldus
+      - var t = timeLeft()
+      p.subtitle(title='Buffer runs for another ' + t.humanize() + ' (' + t.asSeconds() + ' seconds)')
+        = 'Updates every ' + update
+    .container
+      block yield
+    footer
+      button.flip(title='Switch colour theme') day
+      p 
+        | Licensed under Creative Commons 
+        a(rel='license', href='https://creativecommons.org/licenses/by-nc-sa/4.0/') BY-NC-SA 4.0
+        |. 
+        a(rel='alternate', href='/feed') Feed 
+    script(src='//cdn.jsdelivr.net/g/socket.io-client,marked,momentjs,domready@1')
+    block script
+      script(src='/js/live,flip', async)

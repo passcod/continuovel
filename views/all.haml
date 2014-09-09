@@ -1,0 +1,19 @@
+<%
+  require 'time'
+  on_master = !params.include?('ref') ||  params['ref'] == 'master'
+  rposts = if on_master
+    posts.reject { |p| p.future? }
+  else
+    posts
+  end.reverse
+%>
+<p class="jump"><a href="#index">(Jump to issue list)</a></p>
+
+<%= yield_post(rposts.first, template: :post, locals: {comments: false}) %>
+
+<menu id="index">
+  <h1>All Issues</h1>
+  <% rposts.each do |post| %>
+    <%= yield_post(post, template: :_post_excerpt) %>
+  <% end %>
+</menu>
