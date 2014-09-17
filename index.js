@@ -196,7 +196,8 @@ async.waterfall([
   }
 ], function(err) {
   if (err) {
-    throw inspect(err);
+    inspect(err);
+    process.exit(2);
   }
 });
 
