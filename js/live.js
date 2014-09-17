@@ -70,10 +70,10 @@
     state.time_left.subtract(state.interval, 'ms');
     var e = document.querySelector('.subtitle');
     e.setAttribute('title', 'Buffer runs for another ' +
-      state.time_left.humanize() + ' (' +
+      state.time_left.humanize().replace(/^a\s/,'') + ' (' +
       state.time_left.asSeconds() + ' seconds)');
     e.innerHTML = 'Updates every ' +
-      moment.duration(state.interval).humanize().replace(/^a\s/,'');
+      moment.duration(state.interval).humanize();
   };
 
   var updateTitle = function() {
