@@ -1,9 +1,9 @@
 #> Continuovel - Engine for White Aldus (realtime serial novel)
 #? https://github.com/passcod/continuovel
-FROM base/archlinux
+FROM passcod/archlinux
 MAINTAINER Félix Saparelli me@passcod.name
 
-RUN pacman -Syu --ignore filesystem --noconfirm --needed nodejs &&\
+RUN pacman -S --noconfirm nodejs &&\
   pacman -Scc --noconfirm &&\
   rm -rf /var/cache/pacman/pkg/*
 
