@@ -1,5 +1,5 @@
 (function() {
-  var socket = io('http://localhost:3000');
+  var socket = io('/');
   var state = {}, updates = [], ready = false;
   marked.setOptions({smartypants: true});
   
