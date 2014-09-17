@@ -10,8 +10,6 @@ RUN pacman -Syu --ignore filesystem --noconfirm --needed nodejs &&\
 ADD . /app
 WORKDIR /app
 RUN npm install
-VOLUME /app/pointer
-VOLUME /app/source
 
 ENV PORT 80
 EXPOSE 80
