@@ -3,6 +3,7 @@
 // Fix whenever.
 
 var async = require('async');
+var compression = require('compression');
 var engines = require('consolidate');
 var express = require('express');
 var fs = require('fs');
@@ -210,6 +211,7 @@ async.waterfall([
 });
 
 $.app.engine('jade', engines.jade);
+$.app.use(compression({threshold: 512, level: 3}));
 $.app.use(morgan('combined'));
 
 var ropts = {

@@ -3,7 +3,7 @@ extends layout.jade
 - var live = req.params.n == $.chapter
 
 block script
-  script(src='/js/' + (live ? 'live,' : '') + 'flip')
+  script(src='/js/' + (live ? 'live,' : '') + 'flip,analytics')
 
 block yield
   - var chapter = getChapter(req.params.n)

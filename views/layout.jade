@@ -2,9 +2,6 @@ doctype html
 - var update = $.interval.humanize().replace(/^a\s/, '')
 html(lang='en')
   head
-    script.
-      var _gaq = _gaq || [];
-      _gaq.push(['_setDomainName', location.hostname]);
     meta(charset='UTF-8')
     meta(name='viewport', content='initial-scale=1')
     meta(name='description', content='A serial novel updated every ' + update + ' by Félix "passcod" Saparelli. Fantasy.')
@@ -32,4 +29,4 @@ html(lang='en')
         a(rel='alternate', href='/feed') Feed 
     script(src='//cdn.jsdelivr.net/g/socket.io-client,marked,momentjs,domready@1')
     block script
-      script(src='/js/live,flip', async)
+      script(src='/js/live,flip,analytics', async)
