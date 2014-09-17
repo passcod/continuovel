@@ -1,4 +1,8 @@
 (function() {
+  var addr = '/';
+  if (typeof SOCKET_PORT !== 'undefined') {
+    addr = 'http://' + location.hostname + ':' + SOCKET_PORT;
+  }
   var socket = io('/');
   var state = {}, updates = [], ready = false;
   marked.setOptions({smartypants: true});

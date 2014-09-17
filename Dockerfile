@@ -12,5 +12,6 @@ WORKDIR /app
 RUN npm install
 
 ENV PORT 80
+ENV SOCKET_PORT 42001
 EXPOSE 80
 CMD ["/usr/bin/npm", "start"]

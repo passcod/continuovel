@@ -6,6 +6,7 @@ var async = require('async');
 var engines = require('consolidate');
 var express = require('express');
 var fs = require('fs');
+var http = require('http');
 var marked = require('marked');
 var moment = require('moment');
 var morgan = require('morgan');
@@ -155,13 +156,20 @@ async.waterfall([
   },
   function(cb) {
     var port = process.env['PORT'] || 3000;
-    var server = $.app.listen(port, function() {
-      cb(null, server);
+    $.server = $.app.listen(port, function() {
+      cb(null);
     });
   },
-  function(server, cb) {
-    $.io = socketio(server);
-    console.log('Listening on port %d', server.address().port);
+  function(cb) {
+    if (process.env['SOCKET_PORT']) {
+      $.iohttp = http.createServer();
+      $.io = socketio($.iohttp);
+      $.iohttp.listen(process.env['SOCKET_PORT']);
+    } else {
+      $.io = socketio($.server);
+    }
+    console.log('ExpressJS listening on port %d', $.server.address().port);
+    console.log('Socket.io listening on port %d', ($.iohttp || $.server).address().port);
     cb(null);
   },
   function(cb) {
@@ -268,6 +276,9 @@ $.app.get('/js/:scripts', function(req, res) {
       req.next(err);
     } else {
       res.contentType('application/javascript');
+      if ($.iohttp) {
+        str = 'var SOCKET_PORT = ' + $.iohttp.address().port + ';\n' + str;
+      }
       res.send(str);
     }
   });
