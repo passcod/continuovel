@@ -23,8 +23,7 @@ var $ = { // Oh look, a GLOBAL. @#$%!#$%@!#$%@!
   app: express(),
   chapter: 0,
   current: null,
-  // Start at 3-5 minutes, decrease as buffer++
-  interval: moment.duration(3, 'minutes'),
+  interval: moment.duration(2, 'minutes'),
   io: {},
   pointer: -1,
   texts: ['']
@@ -44,7 +43,7 @@ var getId = function() {
   if (isNaN($.pointer)) {
     $.pointer = 0;
     console.log('Pointer was NaN, something is wrong!');
-    return process.exit();
+    return process.exit(1);
   }
   return [$.chapter, $.pointer].join(':');
 };
@@ -113,6 +112,11 @@ var reloadChapters = function(callback) {
     function(files, cb) {
       async.map(files, function(file, c) {
         fs.readFile(path.join(novel_dir, file), function(err, data) {
+          if (file == 'speed' && data) {
+            var speed = data.toString().trim().split(' ');
+            $.interval = moment.duration(+speed[0], speed[1]);
+          }
+
           c(null, [file, (data || new Buffer(0)).toString()]);
         });
       }, cb);
