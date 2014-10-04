@@ -3,8 +3,8 @@
 FROM passcod/archlinux
 MAINTAINER Félix Saparelli me@passcod.name
 
-RUN pacman -S --noconfirm nodejs &&\
-  pacman -Scc --noconfirm &&\
+RUN pacman -S --noconfirm nodejs;\
+  pacman -Scc --noconfirm;\
   rm -rf /var/cache/pacman/pkg/*
 
 ADD . /app
