@@ -28,7 +28,8 @@ var $ = { // Oh look, a GLOBAL. @#$%!#$%@!#$%@!
   interval: moment.duration(2, 'minutes'),
   io: {},
   pointer: -1,
-  texts: ['']
+  texts: [''],
+  show_all: process.env['SHOW_ALL'] || false
 };
 
 // Yeah, sure, that will be just dandy, just gotta
@@ -58,6 +59,7 @@ var loadPointer = function(str) {
   $.pointer = +parts[1];
 };
 var updatePos = function() {
+  if ($.show_all) { return; }
   $.pointer += 1;
   var ch = $.texts[$.chapter];
   if ($.pointer >= ch.contents.length) {
@@ -75,9 +77,9 @@ var getChapter = function(n) {
   var ch = $.texts[n].contents;
   var re = {n: n, title: $.texts[n].title};
 
-  if (n == $.chapter) {
+  if (!$.show_all && n == $.chapter) {
     re.contents = ch.substring(0, $.pointer);
-  } else if (n > $.chapter) {
+  } else if (!$.show_all && n > $.chapter) {
     re.title = '';
     re.contents = '';
   } else {
@@ -89,6 +91,7 @@ var getChapter = function(n) {
   return re;
 };
 var emitCurrent = function(socket) {
+  if ($.show_all) { return; }
   socket.emit('current', {
     chapter: $.chapter,
     pointer: $.pointer,
@@ -103,6 +106,7 @@ var timeLeft = function() {
       return p + t.contents.length;
     }
   }, 0);
+  if ($.show_all) { chrs_to_go = 0; }
   return moment.duration(chrs_to_go * $.interval.asMilliseconds(), 'ms');
 };
 
@@ -146,6 +150,14 @@ var reloadChapters = function(callback) {
 async.waterfall([
   reloadChapters,
   function(cb) {
+    if ($.show_all) {
+      loadPointer([
+        $.texts.length - 1,
+        getChapter($.texts.length - 1).contents.length - 1
+      ].join(':'));
+      return cb(null);
+    }
+
     fs.readFile('pointer', function(err, data) {
       !err && loadPointer(data.toString());
       cb(err);
@@ -174,6 +186,7 @@ async.waterfall([
     cb(null);
   },
   function(cb) {
+    if ($.show_all) { return cb(null); }
     setInterval(function() {
       updatePos();
       emitCurrent($.io);
@@ -181,6 +194,7 @@ async.waterfall([
     cb(null);
   },
   function(cb) {
+    if ($.show_all) { return cb(null); }
     $.io.on('connection', function (socket) {
       socket.emit('info', {
         chapter: $.chapter,
@@ -238,7 +252,7 @@ $.app.get('/feed', function(req, res) {
 
 $.app.get('/chapter/:n', function(req, res) {
   ropts.req = req;
-  if (req.params.n > $.chapter) {
+  if (!$.show_all && req.params.n > $.chapter) {
     return req.next('not published yet');
   }
 

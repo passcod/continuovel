@@ -9,7 +9,7 @@ block yield
   - var chapter = getChapter($.chapter)
   article(data-id=$.chapter, data-live)
     h1= 'Chapter ' + $.chapter + ': ' + chapter.title
-    .contents!= markdown(chapter.contents)
+    .contents!= markdown(chapter.contents + ' ☞ (*chapter is still updating*)')
 
   menu#index
     h1 All Chapters

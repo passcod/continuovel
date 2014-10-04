@@ -55,7 +55,7 @@
     } else {
       var e = document.querySelector('[data-live] .contents');
       state.chapter.contents += data.letter;
-      e.innerHTML = marked(state.chapter.contents);
+      e.innerHTML = marked(state.chapter.contents + ' ☞ (*chapter is still updating*)');
       updateTime();
     }
   };
