@@ -246,7 +246,7 @@ $.app.get('/', function(req, res) {
 $.app.get('/feed', function(req, res) {
   ropts.req = req;
   res.render('feed.jade', ropts, function(err, html) {
-    !err && res.send(html) || req.next(err);
+    !err && res.contentType('application/atom+xml') && res.send(html) || req.next(err);
   });
 });
 
