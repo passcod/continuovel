@@ -1,0 +1,20 @@
+doctype xml
+feed(xmlns='http://www.w3.org/2005/Atom')
+  title White Aldus
+  subtitle A serial novel.
+  link(href='https://whitealdus.passcod.name/feed' rel='self')
+  link(href='https://whitealdus.passcod.name')
+  id= 'whitealdus:id:' + ($.chapter - 1)
+
+  - var i = $.chapter
+  each _ in Array($.chapter)
+    - var chapter = getChapter(i)
+    - i--
+    entry
+      title= 'Chapter ' + i + ': ' + chapter.title
+      link(href='https://whitealdus.passcod.name/chapter/' + i)
+      id= 'whitealdus:id:' + i
+      summary!= markdown(chapter.contents.substring(0, 500) + '…')
+      author
+        name Félix Saparelli
+        email whitealdus@passcod.name
