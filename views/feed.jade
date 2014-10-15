@@ -7,14 +7,15 @@ feed(xmlns='http://www.w3.org/2005/Atom')
   id= 'urn:X-whitealdus:' + ($.chapter - 1)
 
   - var i = $.chapter
-  each _ in Array($.chapter)
-    - var chapter = getChapter(i)
+  each _ in Array($.chapter + 1)
     - i--
-    entry
-      title= 'Chapter ' + i + ': ' + chapter.title
-      link(href='http://whitealdus.passcod.name/chapter/' + i)
-      id= 'urn:X-whitealdus:' + i
-      summary= chapter.contents.substring(0, 500) + '…'
-      author
-        name Félix Saparelli
-        email whitealdus@passcod.name
+    unless i < 0
+      - var chapter = getChapter(i)
+      entry
+        title= 'Chapter ' + i + ': ' + chapter.title
+        link(href='http://whitealdus.passcod.name/chapter/' + i)
+        id= 'urn:X-whitealdus:' + i
+        summary= chapter.contents.substring(0, 500) + '…'
+        author
+          name Félix Saparelli
+          email whitealdus@passcod.name
